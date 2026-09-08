@@ -1,5 +1,12 @@
 const menuToggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.nav');
+if (!document.querySelector('link[rel="icon"]')) {
+  const favicon = document.createElement('link');
+  favicon.rel = 'icon';
+  favicon.type = 'image/png';
+  favicon.href = 'logo/logo.png';
+  document.head.appendChild(favicon);
+}
 const interactionStyles = document.createElement('style');
 interactionStyles.textContent = `
   .header{position:sticky;top:0;z-index:20;background:rgba(11,11,11,.92);backdrop-filter:blur(12px);transition:box-shadow .25s ease,background .25s ease}
