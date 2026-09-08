@@ -1,5 +1,11 @@
 const menuToggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.nav');
+if (nav && !nav.querySelector('a[href="parceiros.html"]')) {
+  const partnerLink = document.createElement('a');
+  partnerLink.href = 'parceiros.html';
+  partnerLink.textContent = 'Seja parceiro';
+  nav.appendChild(partnerLink);
+}
 if (!document.querySelector('link[rel="icon"]')) {
   const favicon = document.createElement('link');
   favicon.rel = 'icon';
@@ -31,6 +37,15 @@ interactionStyles.textContent = `
   .back-button{align-items:center;background:var(--yellow);border:1px solid var(--yellow);color:var(--black);display:inline-flex;font-size:11px;font-weight:700;gap:10px;margin-bottom:34px;padding:10px 13px;transition:filter .2s,transform .2s}
   .back-button:hover{background:var(--yellow);border-color:var(--yellow);color:var(--black);filter:brightness(1.1);transform:translateY(-2px)}
   .back-button:focus-visible{outline:2px solid var(--yellow);outline-offset:4px}
+  .partner-prompt{align-items:center;background:var(--panel);border-top:1px solid var(--line);display:flex;gap:30px;justify-content:space-between;padding:42px}
+  .partner-prompt h2{font-family:var(--display);font-size:28px;letter-spacing:-.05em;margin:0}
+  .partner-prompt p{color:var(--muted);font-size:13px;margin:7px 0 0}
+  .partner-form-shell{margin:0 auto;max-width:780px;padding:65px 42px 100px}
+  .inner-hero-title{font-family:var(--display);font-size:clamp(46px,6vw,72px);letter-spacing:-.08em;line-height:.96;margin:0}
+  .partner-form{background:var(--panel);border:1px solid var(--line);display:grid;gap:18px;padding:28px}
+  .form-field{display:flex;flex-direction:column;gap:7px}.form-field label{color:#d8d8d8;font-size:12px;font-weight:600}.form-field input,.form-field select,.form-field textarea{background:#101010;border:1px solid #393939;color:#fff;font:inherit;font-size:13px;padding:12px 13px;width:100%}.form-field textarea{min-height:105px;resize:vertical}.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--yellow);outline:2px solid rgba(255,196,0,.18)}
+  .form-success{background:rgba(255,196,0,.12);border:1px solid var(--yellow);color:#fff;font-size:14px;line-height:1.6;padding:18px}.form-success strong{color:var(--yellow);display:block;font-family:var(--display);font-size:18px;margin-bottom:5px}
+  @media(max-width:760px){.partner-prompt{align-items:flex-start;display:block;padding:35px 22px}.partner-prompt .button{margin-top:24px}.partner-form-shell{padding:45px 22px 75px}.partner-form{padding:20px}.inner-hero-title{font-size:46px}.form-field input,.form-field select,.form-field textarea{font-size:16px}}
 `;
 document.head.appendChild(interactionStyles);
 
@@ -38,6 +53,20 @@ const header = document.querySelector('.header');
 const updateHeader = () => header?.classList.toggle('is-scrolled', window.scrollY > 8);
 window.addEventListener('scroll', updateHeader, { passive: true });
 updateHeader();
+
+if (document.body.classList.contains('inner-page')) {
+  const prompt = document.createElement('section');
+  prompt.className = 'partner-prompt';
+  prompt.innerHTML = '<div><h2>Quer fazer parte da nossa rede de parceiros?</h2><p>Conte um pouco sobre sua empresa e vamos avaliar uma possível parceria.</p></div><a class="button button-yellow" href="parceiros.html">Quero ser parceiro <span>↗</span></a>';
+  document.querySelector('footer')?.before(prompt);
+}
+
+const partnerForm = document.querySelector('.partner-form');
+partnerForm?.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const formName = partnerForm.dataset.segment === 'market' ? 'Mercado Livre' : 'Licitações';
+  partnerForm.innerHTML = `<div class="form-success"><strong>Pré-cadastro recebido.</strong>Obrigado pelo interesse em ser parceiro de ${formName}. Nossa equipe entrará em contato após analisar suas informações.</div>`;
+});
 
 if (document.body.classList.contains('inner-page')) {
   const breadcrumb = document.querySelector('.breadcrumb');
