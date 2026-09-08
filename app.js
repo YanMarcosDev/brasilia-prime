@@ -1,5 +1,6 @@
 const menuToggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.nav');
+const COMPANY_WHATSAPP = '5561985944946';
 if (nav && !nav.querySelector('a[href="parceiros.html"]')) {
   const partnerLink = document.createElement('a');
   partnerLink.href = 'parceiros.html';
@@ -62,10 +63,40 @@ if (document.body.classList.contains('inner-page')) {
 }
 
 const partnerForm = document.querySelector('.partner-form');
+if (partnerForm) {
+  const nameField = partnerForm.querySelector('[name="nome"]');
+  const nameWrapper = nameField?.closest('.form-field');
+  if (nameField && nameWrapper && !partnerForm.querySelector('[name="empresa"]')) {
+    const nameLabel = nameWrapper.querySelector('label');
+    if (nameLabel) nameLabel.textContent = 'Nome';
+    const companyWrapper = document.createElement('div');
+    companyWrapper.className = 'form-field';
+    companyWrapper.innerHTML = '<label for="partner-company">Nome da empresa</label><input id="partner-company" name="empresa" required />';
+    nameWrapper.after(companyWrapper);
+  }
+  if (partnerForm.dataset.segment === 'market') {
+    partnerForm.elements.tipo?.closest('.form-field')?.remove();
+  } else {
+    const descriptions = partnerForm.querySelectorAll('textarea');
+    const companyDescription = descriptions[descriptions.length - 1];
+    if (companyDescription) {
+      companyDescription.name = 'empresa_info';
+      companyDescription.id = 'bids-about';
+    }
+  }
+  const submitButton = partnerForm.querySelector('button[type="submit"]');
+  if (submitButton) submitButton.innerHTML = 'Enviar pré-cadastro pelo WhatsApp <span>↗</span>';
+}
 partnerForm?.addEventListener('submit', (event) => {
   event.preventDefault();
-  const formName = partnerForm.dataset.segment === 'market' ? 'Mercado Livre' : 'Licitações';
-  partnerForm.innerHTML = `<div class="form-success"><strong>Pré-cadastro recebido.</strong>Obrigado pelo interesse em ser parceiro de ${formName}. Nossa equipe entrará em contato após analisar suas informações.</div>`;
+  if (!partnerForm.reportValidity()) return;
+  const value = (name) => partnerForm.elements[name]?.value.trim() || 'Não informado';
+  const segment = partnerForm.dataset.segment;
+  const message = segment === 'market'
+    ? `Olá! Gostaria de me cadastrar como parceiro na área de Mercado Livre.\n\nNome: ${value('nome')}\nEmpresa: ${value('empresa')}\nWhatsApp: ${value('whatsapp')}\nE-mail: ${value('email')}\nCidade/Estado: ${value('localidade')}\nO que vendo: ${value('produtos')}\nLink: ${value('link')}\nSobre minha operação: ${value('operacao')}\n\nAguardo o retorno da equipe.`
+    : `Olá! Gostaria de me cadastrar como parceiro na área de Licitações.\n\nNome: ${value('nome')}\nEmpresa: ${value('empresa')}\nWhatsApp: ${value('whatsapp')}\nE-mail: ${value('email')}\nCidade/Estado: ${value('localidade')}\nSegmento: ${value('segmento')}\nProdutos/serviços: ${value('fornecimento')}\nCNPJ: ${value('cnpj')}\nSite: ${value('link')}\nSobre a empresa: ${value('empresa_info')}\n\nAguardo o retorno da equipe.`;
+  const whatsappUrl = `https://wa.me/${COMPANY_WHATSAPP}?text=${encodeURIComponent(message)}`;
+  window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
 });
 
 if (document.body.classList.contains('inner-page')) {
