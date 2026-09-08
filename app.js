@@ -87,6 +87,15 @@ if (partnerForm) {
   const submitButton = partnerForm.querySelector('button[type="submit"]');
   if (submitButton) submitButton.innerHTML = 'Enviar pré-cadastro pelo WhatsApp <span>↗</span>';
 }
+if (partnerForm && !partnerForm.querySelector('[name="empresa"]')) {
+  const nameInput = partnerForm.querySelector('[name="nome"]');
+  const nameWrapper = nameInput?.closest('.form-field');
+  if (nameWrapper) {
+    const label = nameWrapper.querySelector('label');
+    if (label) label.textContent = 'Nome';
+    nameWrapper.insertAdjacentHTML('afterend', '<div class="form-field"><label for="partner-company">Nome da empresa</label><input id="partner-company" name="empresa" required /></div>');
+  }
+}
 partnerForm?.addEventListener('submit', (event) => {
   event.preventDefault();
   if (!partnerForm.reportValidity()) return;
