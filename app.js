@@ -174,6 +174,9 @@ document.querySelectorAll('img[src="logo/logo-bp.png"]').forEach((image) => {
 document.querySelectorAll('.footer-brand p').forEach((description) => {
   description.remove();
 });
+document.querySelectorAll('.footer-links').forEach((links) => {
+  links.remove();
+});
 
 document.querySelectorAll('.choice-card').forEach((card) => {
   const link = card.querySelector('a[href]');
