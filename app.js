@@ -9,12 +9,25 @@ if (!document.querySelector('link[rel="icon"]')) {
 }
 const interactionStyles = document.createElement('style');
 interactionStyles.textContent = `
+  body{font-size:16px}
+  .eyebrow,.section-label,.breadcrumb,.art-top,.art-bottom,.panel-header,.footer-contact small{font-size:10px}
+  .lead{font-size:16px}
+  .choice-card p:not(.choice-tag),.overview-intro p,.service-list p{font-size:14px}
+  .choice-tag{font-size:10px}
+  .choice-card h2{font-size:clamp(39px,4vw,46px)}
+  .data-art>strong{font-size:88px}
+  .editais span,.editais small,.data-art>small{font-size:10px}
+  .how-step span,.service-list strong,.benefit-row strong{font-size:16px}
+  .how-step b,.service-list span,.benefit-row b{font-size:13px}
+  .footer-contact a{font-size:17px}
+  .footer-contact span{font-size:13px}
+  .footer-bottom{font-size:11px}
   .header{position:sticky;top:0;z-index:20;background:rgba(11,11,11,.92);backdrop-filter:blur(12px);transition:box-shadow .25s ease,background .25s ease}
   .header.is-scrolled{background:rgba(11,11,11,.98);box-shadow:0 1px 0 rgba(255,255,255,.08)}
   .choice-card{cursor:pointer}
   .choice-card:focus-within{outline:1px solid var(--yellow);outline-offset:3px}
   .button:focus-visible,.nav a:focus-visible,.brand:focus-visible,.menu-toggle:focus-visible{outline:2px solid var(--yellow);outline-offset:4px}
-  @media(max-width:760px){.header{position:sticky}.nav.open{box-shadow:0 14px 24px rgba(0,0,0,.3)}.choice-card{min-height:410px}.choice-card .button{width:100%}.footer-contact{width:auto!important}}
+  @media(max-width:760px){.header{position:sticky}.nav.open{box-shadow:0 14px 24px rgba(0,0,0,.3)}.choice-card{min-height:410px}.choice-card .button{width:100%}.choice-card p:not(.choice-tag),.overview-intro p,.service-list p{font-size:13px}.choice-card h2{font-size:38px}.data-art>strong{font-size:70px}.footer-contact{width:auto!important}.footer-contact a{font-size:16px}.footer-contact span{font-size:13px}.footer-bottom{font-size:10px}}
   .back-button{align-items:center;background:var(--yellow);border:1px solid var(--yellow);color:var(--black);display:inline-flex;font-size:11px;font-weight:700;gap:10px;margin-bottom:34px;padding:10px 13px;transition:filter .2s,transform .2s}
   .back-button:hover{background:var(--yellow);border-color:var(--yellow);color:var(--black);filter:brightness(1.1);transform:translateY(-2px)}
   .back-button:focus-visible{outline:2px solid var(--yellow);outline-offset:4px}
